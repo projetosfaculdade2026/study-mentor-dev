@@ -1,0 +1,754 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f8f6f0">
+    <meta name="description" content="Aprenda Python pelo Telegram com explicações claras, exemplos práticos e exercícios para praticar.">
+    <meta property="og:title" content="Study Mentor Dev">
+    <meta property="og:description" content="Aprenda Python pelo Telegram com explicações claras, exemplos práticos e exercícios para praticar.">
+    <meta property="og:type" content="website">
+    <title>Study Mentor Dev — Python no Telegram</title>
+    <style>
+      :root {
+        color-scheme: light;
+        --background: hsl(43 38% 96%);
+        --foreground: hsl(190 31% 17%);
+        --border: hsl(39 19% 84%);
+        --muted-foreground: hsl(190 12% 43%);
+        --primary: #2AABEE;
+        --primary-hover: hsl(200.5 85.2% 48%);
+        --accent: hsl(200 100% 90%);
+        --telegram-blue: #2AABEE;
+        --font-sans: "Manrope", "Avenir Next", Avenir, "Segoe UI", Arial, sans-serif;
+        --font-serif: "Newsreader", Georgia, "Times New Roman", serif;
+        --font-mono: "DM Mono", "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+      }
+
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        margin: 0;
+        background: var(--background);
+        color: var(--foreground);
+        font-family: var(--font-sans);
+        -webkit-font-smoothing: antialiased;
+        text-rendering: optimizeLegibility;
+      }
+
+      a {
+        color: inherit;
+      }
+
+      ::selection {
+        background: var(--accent);
+        color: var(--foreground);
+      }
+
+      .page-shell {
+        overflow: hidden;
+      }
+
+      .site-header,
+      .hero,
+      .method,
+      .audience,
+      .site-footer {
+        width: min(1120px, calc(100% - 64px));
+        margin-inline: auto;
+      }
+
+      .site-header {
+        height: 88px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border-bottom: 1px solid var(--border);
+      }
+
+      .brand {
+        display: inline-flex;
+        align-items: center;
+        gap: 11px;
+        color: var(--foreground);
+        text-decoration: none;
+        font-size: 14px;
+        font-weight: 800;
+        letter-spacing: -.045em;
+      }
+
+      .brand-mark {
+        width: 35px;
+        height: 35px;
+        display: grid;
+        place-items: center;
+        border-radius: 11px;
+        background: var(--primary);
+        color: #fff;
+      }
+
+      .brand-mark svg {
+        width: 19px;
+        height: 19px;
+      }
+
+      .header-note {
+        display: flex;
+        align-items: center;
+        gap: 9px;
+        color: var(--muted-foreground);
+        font: 11px var(--font-mono);
+        letter-spacing: .06em;
+        text-transform: uppercase;
+      }
+
+      .status-dot {
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: var(--primary);
+      }
+
+      .hero {
+        position: relative;
+        min-height: 600px;
+        display: grid;
+        grid-template-columns: 1fr .93fr;
+        align-items: center;
+        gap: 70px;
+        padding-block: 77px 90px;
+      }
+
+      .hero-copy {
+        position: relative;
+        z-index: 1;
+        padding-bottom: 9px;
+      }
+
+      .eyebrow {
+        display: flex;
+        align-items: center;
+        gap: 11px;
+        margin: 0 0 24px;
+        color: var(--primary);
+        font: 11px var(--font-mono);
+        letter-spacing: .12em;
+        text-transform: uppercase;
+      }
+
+      .eyebrow::before {
+        content: "";
+        width: 24px;
+        height: 1px;
+        background: currentColor;
+      }
+
+      .hero h1 {
+        max-width: 530px;
+        margin: 0;
+        font-size: clamp(3.45rem, 6.1vw, 5.45rem);
+        line-height: .99;
+        letter-spacing: -.075em;
+        font-weight: 700;
+      }
+
+      .hero h1 em {
+        display: block;
+        color: var(--primary);
+        font: 500 1.02em/1.04 var(--font-serif);
+        letter-spacing: -.065em;
+      }
+
+      .hero-description {
+        max-width: 410px;
+        margin: 24px 0 30px;
+        color: var(--muted-foreground);
+        font-size: 16px;
+        line-height: 1.8;
+      }
+
+      .telegram-link {
+        min-height: 54px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 13px;
+        padding: 0 21px;
+        border: 1px solid var(--primary);
+        border-radius: 8px;
+        background: var(--primary);
+        color: #fff;
+        font-size: 14px;
+        font-weight: 700;
+        text-decoration: none;
+        transition: transform .2s ease, background-color .2s ease;
+      }
+
+      .telegram-link:hover {
+        transform: translateY(-2px);
+        background: var(--primary-hover);
+      }
+
+      .telegram-link:focus-visible,
+      .brand:focus-visible {
+        outline: 3px solid var(--accent);
+        outline-offset: 4px;
+      }
+
+      .telegram-link svg {
+        width: 17px;
+        height: 17px;
+      }
+
+      .link-caption {
+        display: block;
+        margin-top: 13px;
+        color: var(--muted-foreground);
+        font-size: 11px;
+      }
+
+      .chat-stage {
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 475px;
+      }
+
+      .chat-window {
+        z-index: 1;
+        width: min(100%, 394px);
+        overflow: hidden;
+        border: 1px solid hsl(200 25% 86%);
+        border-radius: 12px;
+        background: hsl(204 42% 95%);
+        box-shadow: 0 18px 48px hsl(190 30% 18% / .1), 0 3px 10px hsl(190 30% 18% / .04);
+      }
+
+      .chat-top {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 16px 19px;
+        background: var(--telegram-blue);
+        color: #fff;
+      }
+
+      .chat-avatar {
+        width: 37px;
+        height: 37px;
+        display: grid;
+        place-items: center;
+        border-radius: 50%;
+        background: #fff;
+        color: var(--telegram-blue);
+        font: 12px var(--font-mono);
+      }
+
+      .chat-name {
+        font-size: 13px;
+        font-weight: 800;
+      }
+
+      .chat-online {
+        margin-top: 2px;
+        color: hsl(0 0% 100% / .9);
+        font-size: 10px;
+      }
+
+      .chat-content {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 9px;
+        padding: 16px;
+        background: hsl(204 42% 95%);
+      }
+
+      .chat-date {
+        align-self: center;
+        margin: 0 0 3px;
+        padding: 4px 9px;
+        border-radius: 12px;
+        background: hsl(204 30% 89%);
+        color: hsl(200 20% 40%);
+        font: 9px var(--font-sans);
+        text-align: center;
+      }
+
+      .chat-message {
+        max-width: 87%;
+        padding: 10px 12px;
+        font-size: 11px;
+        line-height: 1.55;
+      }
+
+      .question-bubble {
+        align-self: flex-end;
+        border-radius: 12px 12px 3px 12px;
+        background: var(--telegram-blue);
+        color: #fff;
+      }
+
+      .answer-bubble {
+        align-self: flex-start;
+        border-radius: 12px 12px 12px 3px;
+        background: #fff;
+        color: var(--foreground);
+        box-shadow: 0 1px 2px hsl(190 30% 18% / .08);
+      }
+
+      .answer-part-title {
+        display: block;
+        margin-bottom: 3px;
+        color: var(--primary);
+        font: 10px var(--font-mono);
+      }
+
+      .answer-bubble p {
+        margin: 0;
+      }
+
+      .chat-code {
+        margin: 1px 0 0;
+        overflow-x: auto;
+        color: var(--foreground);
+        font: 10px/1.5 var(--font-mono);
+        white-space: pre-wrap;
+      }
+
+      .method {
+        padding: 79px 0 84px;
+        border-top: 1px solid var(--border);
+      }
+
+      .section-heading {
+        display: grid;
+        grid-template-columns: 1fr .7fr;
+        align-items: end;
+        gap: 50px;
+        margin-bottom: 37px;
+      }
+
+      .section-kicker {
+        margin: 0 0 12px;
+        color: var(--primary);
+        font: 10px var(--font-mono);
+        letter-spacing: .13em;
+        text-transform: uppercase;
+      }
+
+      .section-heading h2,
+      .audience h2 {
+        margin: 0;
+        font-size: clamp(2rem, 3.7vw, 3.1rem);
+        line-height: 1.1;
+        letter-spacing: -.065em;
+      }
+
+      .section-heading > p {
+        margin: 0 0 3px;
+        color: var(--muted-foreground);
+        font-size: 14px;
+        line-height: 1.8;
+      }
+
+      .method-flow {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        border-top: 1px solid var(--border);
+        border-bottom: 1px solid var(--border);
+      }
+
+      .method-step {
+        min-height: 155px;
+        padding: 23px 26px 24px 0;
+      }
+
+      .method-step + .method-step {
+        padding-left: 26px;
+        border-left: 1px solid var(--border);
+      }
+
+      .step-index {
+        color: var(--primary);
+        font: 11px var(--font-mono);
+      }
+
+      .method-step h3 {
+        margin: 17px 0 8px;
+        font-size: 17px;
+        letter-spacing: -.035em;
+      }
+
+      .method-step p {
+        max-width: 260px;
+        margin: 0;
+        color: var(--muted-foreground);
+        font-size: 12px;
+        line-height: 1.7;
+      }
+
+      .audience {
+        display: grid;
+        grid-template-columns: .8fr 1.2fr;
+        gap: 80px;
+        align-items: center;
+        padding: 61px 56px 64px;
+        margin-bottom: 71px;
+        border-radius: 15px;
+        background: hsl(190 31% 17%);
+        color: hsl(43 38% 96%);
+      }
+
+      .audience .section-kicker {
+        color: hsl(200.5 85.2% 70%);
+      }
+
+      .audience h2 {
+        max-width: 290px;
+      }
+
+      .audience-list {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 14px;
+      }
+
+      .audience-item {
+        min-height: 113px;
+        padding: 17px 18px;
+        border: 1px solid hsl(43 38% 96% / .2);
+        border-radius: 9px;
+      }
+
+      .audience-item span {
+        display: block;
+        margin-bottom: 12px;
+        color: hsl(200.5 85.2% 70%);
+        font: 10px var(--font-mono);
+      }
+
+      .audience-item strong {
+        font-size: 14px;
+        line-height: 1.5;
+        font-weight: 600;
+      }
+
+      .site-footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 0 27px;
+        color: var(--muted-foreground);
+        font-size: 10px;
+      }
+
+      .footer-brand {
+        color: var(--foreground);
+        font-weight: 800;
+      }
+
+      @media (max-width: 820px) {
+        .site-header,
+        .hero,
+        .method,
+        .audience,
+        .site-footer {
+          width: min(100% - 44px, 600px);
+        }
+
+        .hero {
+          grid-template-columns: 1fr;
+          gap: 10px;
+          padding-block: 65px 58px;
+        }
+
+        .hero-copy {
+          max-width: 600px;
+        }
+
+        .hero h1 {
+          max-width: 620px;
+          font-size: clamp(3.7rem, 11vw, 5.3rem);
+        }
+
+        .chat-stage {
+          min-height: 475px;
+        }
+
+        .chat-window {
+          width: min(100%, 430px);
+        }
+
+        .method {
+          padding-block: 62px 67px;
+        }
+
+        .section-heading {
+          grid-template-columns: 1fr;
+          gap: 15px;
+        }
+
+        .section-heading > p {
+          max-width: 490px;
+        }
+
+        .audience {
+          grid-template-columns: 1fr;
+          gap: 28px;
+          padding: 39px;
+          margin-bottom: 52px;
+        }
+
+        .audience h2 {
+          max-width: none;
+        }
+      }
+
+      @media (max-width: 520px) {
+        .site-header,
+        .hero,
+        .method,
+        .audience,
+        .site-footer {
+          width: calc(100% - 36px);
+        }
+
+        .site-header {
+          height: 72px;
+        }
+
+        .header-note {
+          font-size: 9px;
+        }
+
+        .hero {
+          padding-top: 57px;
+        }
+
+        .hero h1 {
+          font-size: clamp(3.25rem, 15vw, 4.6rem);
+        }
+
+        .hero-description {
+          font-size: 14px;
+          line-height: 1.75;
+        }
+
+        .telegram-link {
+          width: 100%;
+        }
+
+        .chat-stage {
+          min-height: 420px;
+          margin-inline: -4px;
+        }
+
+        .chat-window {
+          width: min(100%, 370px);
+        }
+
+        .chat-content {
+          padding: 13px;
+        }
+
+        .method {
+          padding-block: 53px 55px;
+        }
+
+        .section-heading {
+          margin-bottom: 27px;
+        }
+
+        .method-flow {
+          grid-template-columns: 1fr;
+        }
+
+        .method-step {
+          min-height: unset;
+          padding: 19px 0 20px;
+        }
+
+        .method-step + .method-step {
+          padding-left: 0;
+          border-left: 0;
+          border-top: 1px solid var(--border);
+        }
+
+        .method-step h3 {
+          margin-top: 11px;
+        }
+
+        .audience {
+          padding: 29px 23px;
+          margin-bottom: 40px;
+        }
+
+        .audience-list {
+          grid-template-columns: 1fr;
+        }
+
+        .audience-item {
+          min-height: 95px;
+        }
+
+        .site-footer {
+          align-items: flex-start;
+          gap: 10px;
+          flex-direction: column;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+          scroll-behavior: auto !important;
+          animation-duration: .01ms !important;
+          animation-iteration-count: 1 !important;
+          transition-duration: .01ms !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="page-shell">
+      <header class="site-header">
+        <a class="brand" href="#inicio" aria-label="Study Mentor Dev, início">
+          <span class="brand-mark" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none">
+              <path d="m8 8-4 4 4 4M16 8l4 4-4 4M14 5l-4 14" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"></path>
+            </svg>
+          </span>
+          <span>Study Mentor Dev</span>
+        </a>
+        <div class="header-note"><span class="status-dot" aria-hidden="true"></span> Python para começar</div>
+      </header>
+
+      <section class="hero" id="inicio" aria-labelledby="hero-title">
+        <div class="hero-copy">
+          <p class="eyebrow">Aprenda programação, no Telegram</p>
+          <h1 id="hero-title">Python fica mais simples <em>quando faz sentido.</em></h1>
+          <p class="hero-description">
+            Um chatbot para aprender Python com explicações diretas, exemplos do dia a dia e exercícios para praticar.
+          </p>
+          <a
+            class="telegram-link"
+            href="https://t.me/StudyMentorDev_bot"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Conversar no Telegram com o Study Mentor Dev (abre em nova aba)"
+          >
+            Conversar no Telegram
+            <svg viewBox="0 0 20 20" fill="none" aria-hidden="true">
+              <path d="M4 10h11m-5-5 5 5-5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path>
+            </svg>
+          </a>
+          <span class="link-caption">Abre uma conversa no Telegram.</span>
+        </div>
+
+        <div class="chat-stage" aria-label="Exemplo de conversa com o Study Mentor Dev">
+          <article class="chat-window">
+            <header class="chat-top">
+              <div class="chat-avatar" aria-hidden="true">&lt;/&gt;</div>
+              <div>
+                <div class="chat-name">Study Mentor Dev</div>
+                <div class="chat-online">bot</div>
+              </div>
+            </header>
+            <div class="chat-content">
+              <p class="chat-date">Hoje</p>
+              <div class="chat-message question-bubble">O que é uma variável em Python?</div>
+              <article class="chat-message answer-bubble">
+                <span class="answer-part-title">Conceito</span>
+                <p>Uma variável guarda um valor para você usar depois.</p>
+              </article>
+              <article class="chat-message answer-bubble">
+                <span class="answer-part-title">Exemplo prático</span>
+                <pre class="chat-code"><code>cidade = "Recife"
+print(cidade)</code></pre>
+              </article>
+              <article class="chat-message answer-bubble">
+                <span class="answer-part-title">Exercício</span>
+                <p>Crie uma variável chamada <code>nome</code> e guarde nela o seu nome.</p>
+              </article>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="method" aria-labelledby="method-title">
+        <div class="section-heading">
+          <div>
+            <p class="section-kicker">Um caminho para entender</p>
+            <h2 id="method-title">Aprender, passo a passo.</h2>
+          </div>
+          <p>Cada resposta organiza o assunto em três partes, para você entender a ideia e colocar o código em prática.</p>
+        </div>
+        <div class="method-flow">
+          <article class="method-step">
+            <span class="step-index">01 / ENTENDA</span>
+            <h3>Conceito</h3>
+            <p>Uma explicação clara da ideia, sem complicar o começo.</p>
+          </article>
+          <article class="method-step">
+            <span class="step-index">02 / VEJA</span>
+            <h3>Exemplo prático</h3>
+            <p>Um trecho de código para aproximar a teoria do uso real.</p>
+          </article>
+          <article class="method-step">
+            <span class="step-index">03 / TENTE</span>
+            <h3>Exercício</h3>
+            <p>Uma proposta curta para experimentar o que acabou de aprender.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="audience" aria-labelledby="audience-title">
+        <div>
+          <p class="section-kicker">Seu ponto de partida</p>
+          <h2 id="audience-title">Para quem é</h2>
+        </div>
+        <div class="audience-list">
+          <article class="audience-item">
+            <span>01</span>
+            <strong>Para quem está começando do zero em programação.</strong>
+          </article>
+          <article class="audience-item">
+            <span>02</span>
+            <strong>Para quem está mudando de carreira e quer aprender Python.</strong>
+          </article>
+        </div>
+      </section>
+
+      <footer class="site-footer">
+        <span class="footer-brand">Study Mentor Dev</span>
+        <span>Python, uma ideia de cada vez.</span>
+      </footer>
+    </main>
+
+    <script>
+      // A navegação interna acompanha a preferência de movimento do dispositivo.
+      document.querySelectorAll('a[href^="#"]').forEach((link) => {
+        link.addEventListener("click", (event) => {
+          const target = document.querySelector(link.getAttribute("href"));
+          if (!target) return;
+          event.preventDefault();
+          target.scrollIntoView({
+            behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth"
+          });
+          history.pushState(null, "", link.getAttribute("href"));
+        });
+      });
+    </script>
+  </body>
+</html>
